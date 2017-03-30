@@ -19,6 +19,6 @@ struct Zone {
 };
 
 bool isClicableZone (int x, int y, Zone zone);
-void * createClicableZone (Zone *zone);
+void createClicableZone (int x1, int x2, int y1, int y2, Zone *zone);
 
 #endif // CLICK_H

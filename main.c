@@ -84,7 +84,7 @@ int main (int argc, char *argv[]) {
   printColumns(columns, window);
 
   Zone zone;
-  createClicableZone(&zone);
+  createClicableZone(GRID_POSITION_X, GRID_POSITION_X + CLICABLE_WIDTH, CLICABLE_Y1, CLICABLE_Y2, &zone);
 
   int continuer = 1;
 
