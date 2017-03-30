@@ -7,31 +7,32 @@ void solo(){
     defense();
 }
 
-void attaque(){
+void attaque(int tokenType, int column, int line, int grid[COLUMN][LINE]){
 /**Zone de variables*/
 
     /**Parcourir le tableau*/
     /**Alignés sur une ligne et pas de pions en dessous*/
     if(3 pions à côté sur une même ligne && case à côté libre && case en dessous de la case à côté pleine){ 
-        poser un pion
+        putToken();
     }else{
         /**Alignés sur une ligne et pions en dessous*/
         if(3 pions à côté sur une même ligne && case à côté libre && case en dessous de la case à côté pleine){
-            poser un pion
+            putToken();
         }else{
             /**Sur une même colonne*/
             if(3 pions alignés sur la même colonne && case au dessus libre){
-                poser un pion
+                putToken();
             }else{
                 /**EN diagonale vers la droite*/
                 if(3 pions alignés en colonne vers la droite && case à droite du dernier point occupée && case au dessus à droite libre){
-                    poser un pion
+                    putToken();
                  }else[
                      /*En diagonale vers la gauche*/
                     if(3 pions alignés en colonne vers la gauche && case à gauche du dernier point occupée && case au dessus à gauche libre){
-                        poser un pion
+                        putToken();
                     }else{
-                        générer un nombre aléatoire et poser un pion
+                        générer un nombre aléatoire
+                        putToken();
                     }
                 ]  
             }
