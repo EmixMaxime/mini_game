@@ -7,6 +7,7 @@
 #include "variables.h"
 #include "click.h"
 #include "tokens.h"
+#include "grid.h"
 
 #include <SDL/SDL_mixer.h>
 
@@ -67,15 +68,24 @@ void * buildGrid (SDL_Surface *window) {
 int main (int argc, char *argv[]) {
 
   // La première chose à faire : initialiser SDL
-  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_VIDEO) == -1) {
+  if (SDL_Init(SDL_INIT_VIDEO) == -1) {
     fprintf(stderr, "Erreur d'initialisation de la SDL \n");
     exit(EXIT_FAILURE);
   }
 
-  // Rappel : j'ai 7 colonnes de xxx pidels
-  //
   SDL_Surface *window = buildWindow("Puissance 4");
   SDL_Surface *imageDeFond = buildGrid(window);
+
+  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
+    printf("%s", Mix_GetError());
+  }
+
+  Mix_Music *musique = Mix_LoadMUS("musique.mp3");
+  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+
+  // Initialisation de la grille en mémoire
+  int grid[COLUMNS_NUMBER][LINES_NUMBER];
+  initializeGrid(grid);
 
   Columns columns[COLUMNS_NUMBER];
 
@@ -86,7 +96,6 @@ int main (int argc, char *argv[]) {
   Zone zone;
   createClicableZone(GRID_POSITION_X, GRID_POSITION_X + CLICABLE_WIDTH, CLICABLE_Y1, CLICABLE_Y2, &zone);
 
-  int continuer = 1;
 
   SDL_Event event;
 
@@ -101,6 +110,8 @@ int main (int argc, char *argv[]) {
   SDL_Surface *pionDeJeuJaune = creerBaseJeton(true, window, positionPionJaune);
 
   bool typeJeton = true; // Par défaut c'est le jeton jaune
+  
+  int continuer = 1;
 
     while (continuer) {
         SDL_WaitEvent(&event);
@@ -128,7 +139,7 @@ int main (int argc, char *argv[]) {
                         position = positionPionRouge;
                         typeJeton = true;
                     }
-                    dupliquerJeton(event, window, pion, position, zone, columns);
+                    dupliquerJeton(event, window, pion, position, zone, columns, grid);
                 }
                 break;
         }
@@ -140,6 +151,9 @@ int main (int argc, char *argv[]) {
     SDL_FreeSurface(pionDeJeuJaune);
     SDL_FreeSurface(pionDeJeuRouge);
     SDL_FreeSurface(imageDeFond);
+
+    Mix_FreeMusic(musique);
+    Mix_CloseAudio();
 
     SDL_Quit();
 

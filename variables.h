@@ -14,7 +14,14 @@
 
 // Largeur de la grille (l'image)
 #define LARGEUR_FOND 739
+
+// Colonnes
 #define COLUMNS_NUMBER 7
+#define LAST_CASE_COLUMN (COLUMNS_NUMBER - 1)
+
+// Lignes
+#define LINES_NUMBER 6
+#define LAST_CASE_LINE (LINES_NUMBER - 1)
 
 #define GRID_POSITION_X ((LARGEUR_FENETRE /2) - (LARGEUR_FOND /2))
 
@@ -26,6 +33,7 @@
 #define CLICABLE_COLUMN_MARGIN 5 // les block de jetons sont espacé de 5px
 // la grille a 10px left/right de padding (le font bleu)
 #define GRID_PADDING 10
+#define GRID_TOKEN_BOTTOM (HAUTEUR_FENETRE - GRID_PADDING)
 #define TOKEN_WIDTH 97
 
 #define CLICABLE_Y1 0
