@@ -1,7 +1,7 @@
 ## Compilation sur linux avec gcc
 ```bash
 # Compile
-gcc main.c columns.c tokens.c click.c -lSDL -o Out -I ./
+gcc main.c columns.c tokens.c click.c check.c grid.c -lSDL -lSDL_mixer -o Test -I ./
 
 # Execute
 ./Out
