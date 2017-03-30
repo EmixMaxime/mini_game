@@ -113,6 +113,10 @@ int main (int argc, char *argv[]) {
   
   int continuer = 1;
 
+  //http://stackoverflow.com/questions/859634/c-pointer-to-array-array-of-pointers-disambiguation
+  SDL_Surface *pions[42]; // Va contenir tout les jetons ajoutés pour ensuite les supprimés de la mémoire!
+  int pionNumber = 0;
+
     while (continuer) {
         SDL_WaitEvent(&event);
         switch(event.type) {
@@ -134,6 +138,9 @@ int main (int argc, char *argv[]) {
                         pion = pionDeJeuJaune;
                         position = positionPionJaune;
                         typeJeton = false;
+
+                        pions[pionNumber] = pion;
+                        pionNumber++;
                     } else {
                         pion = pionDeJeuRouge;
                         position = positionPionRouge;
@@ -151,6 +158,11 @@ int main (int argc, char *argv[]) {
     SDL_FreeSurface(pionDeJeuJaune);
     SDL_FreeSurface(pionDeJeuRouge);
     SDL_FreeSurface(imageDeFond);
+
+    int k;
+    for (k = 0; k < 41; k++) {
+      SDL_FreeSurface(pions[k]);
+    }
 
     Mix_FreeMusic(musique);
     Mix_CloseAudio();
