@@ -1,5 +1,10 @@
+#ifndef COLUMNS_H
+#define COLUMNS_H
+
 #include <stdbool.h>
 #include <SDL/SDL.h>
+#include "variables.h"
+#include "click.h"
 
 // Ça nous permet d'utiliser le type Columns sans le mot clef "struct"
 typedef struct Columns Columns;
@@ -21,3 +26,14 @@ struct Columns {
 void * fillColumns (Columns columns[]);
 
 void printColumns (Columns columns[], SDL_Surface *window);
+
+void printTermColumns (Columns columns[]);
+/**
+ * Je donne la coordonnée x -> il me retourne la variable Columns qui correspond
+ * @param x [description]
+ * @param y [description]
+ * 
+ */
+void * whereIsCord (int x, Columns columns[]);
+
+#endif // COLUMNS_H

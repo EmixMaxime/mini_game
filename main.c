@@ -2,9 +2,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <SDL/SDL.h>
-#include "./function.h"
+
 #include "columns.h"
 #include "variables.h"
+#include "click.h"
+#include "tokens.h"
+
+#include <SDL/SDL_mixer.h>
 
 /**
  * buildWindow  Création / "customisation" et ouverture de la fenêtre
@@ -60,18 +64,11 @@ void * buildGrid (SDL_Surface *window) {
   return imageDeFond;
 }
 
-bool isClicableZone (int x, int y, Zone zone) {
-  // Le y est comprit entre le y du top et y du bas
-  if ( (y >= zone.bottom.y && y <= zone.top.y) && ... ) {
-
-  }
-}
-
 int main (int argc, char *argv[]) {
 
   // La première chose à faire : initialiser SDL
-  if (SDL_Init(SDL_INIT_VIDEO) == -1) {
-    fprintf(stderr, "Erreur d'initialisation de la SDL");
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_VIDEO) == -1) {
+    fprintf(stderr, "Erreur d'initialisation de la SDL \n");
     exit(EXIT_FAILURE);
   }
 
@@ -83,8 +80,11 @@ int main (int argc, char *argv[]) {
   Columns columns[COLUMNS_NUMBER];
 
   fillColumns(columns);
-  printf("x1 column 1 = %d\n", columns[0].x1 );
+  printTermColumns(columns);
   printColumns(columns, window);
+
+  Zone zone;
+  createClicableZone(&zone);
 
   int continuer = 1;
 
@@ -128,7 +128,7 @@ int main (int argc, char *argv[]) {
                         position = positionPionRouge;
                         typeJeton = true;
                     }
-                    dupliquerJeton(event, window, pion, position);
+                    dupliquerJeton(event, window, pion, position, zone, columns);
                 }
                 break;
         }
