@@ -44,13 +44,17 @@ void * buildWindow (char windowTitle[]) {
   // Pourquoi ce NULL en 2e param? Parce qu'on souhaite colorer TOUTE la surface
   SDL_FillRect(window, NULL, white);
 
-
   SDL_Flip(window); // Mise à jour de l'écran (on applique nos modifications faite en mémoire sur l'écran)
 
 
   return window;
 }
 
+/**
+ * On colle l'image de la grille sur l'écran
+ * @param  window 
+ * @return        Pointeur vers imageDeFond qui est un SDL_Surface <!> Ne pas oublier de libérer la mémoire!
+ */
 void * buildGrid (SDL_Surface *window) {
   SDL_Surface *imageDeFond = SDL_LoadBMP("grille.bmp");
   SDL_Rect positionFond;
@@ -80,8 +84,8 @@ int main (int argc, char *argv[]) {
     printf("%s", Mix_GetError());
   }
 
-  Mix_Music *musique = Mix_LoadMUS("musique.mp3");
-  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+  // Mix_Music *musique = Mix_LoadMUS("musique.mp3");
+  //Mix_PlayMusic(musique, -1); // Jouer infiniment la musique
 
   // Initialisation de la grille en mémoire
   int grid[COLUMNS_NUMBER][LINES_NUMBER];
@@ -90,8 +94,8 @@ int main (int argc, char *argv[]) {
   Columns columns[COLUMNS_NUMBER];
 
   fillColumns(columns);
-  printTermColumns(columns);
-  printColumns(columns, window);
+  // printTermColumns(columns);
+  // printColumns(columns, window);
 
   Zone zone;
   createClicableZone(GRID_POSITION_X, GRID_POSITION_X + CLICABLE_WIDTH, CLICABLE_Y1, CLICABLE_Y2, &zone);
@@ -114,7 +118,7 @@ int main (int argc, char *argv[]) {
   int continuer = 1;
 
   //http://stackoverflow.com/questions/859634/c-pointer-to-array-array-of-pointers-disambiguation
-  SDL_Surface *pions[42]; // Va contenir tout les jetons ajoutés pour ensuite les supprimés de la mémoire!
+  SDL_Surface *pions[42] = { NULL }; // Va contenir tout les jetons ajoutés pour ensuite les supprimés de la mémoire!
   int pionNumber = 0;
 
     while (continuer) {
@@ -158,14 +162,15 @@ int main (int argc, char *argv[]) {
     SDL_FreeSurface(pionDeJeuJaune);
     SDL_FreeSurface(pionDeJeuRouge);
     SDL_FreeSurface(imageDeFond);
+    // SDL_FreeSurface(window);
 
     int k;
     for (k = 0; k < 41; k++) {
-      SDL_FreeSurface(pions[k]);
+      // SDL_FreeSurface(pions[k]);
     }
 
-    Mix_FreeMusic(musique);
-    Mix_CloseAudio();
+    // Mix_FreeMusic(musique);
+    // Mix_CloseAudio();
 
     SDL_Quit();
 

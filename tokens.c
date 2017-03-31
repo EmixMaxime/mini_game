@@ -34,7 +34,7 @@ void dupliquerJeton (SDL_Event event, SDL_Surface *window,  SDL_Surface *token, 
     Columns *column = whereIsCord(eventX, columns);
 
     if (column == NULL) {
-        return;
+      return;
     }
 
     printf("J'ai cliqué dans la zone %d", (*column).number);
@@ -51,11 +51,10 @@ void dupliquerJeton (SDL_Event event, SDL_Surface *window,  SDL_Surface *token, 
     // printf("OHHHHHHHHHHHHHHH \n");
     // fflush(stdout); // Prints to screen or whatever your standard out is
 
-    if (okay) {
+    if (okay && line >= 0) {
         positionToken.x = middle;
         // positionToken.y = 0 - ( token->h /2);
-        positionToken.y = TOKEN_WIDTH * line + TOKEN_WIDTH + token->h /2;
-
+        positionToken.y = (TOKEN_WIDTH * line + TOKEN_WIDTH)  + ( 5 * line ) +4;
         SDL_BlitSurface(token, NULL, window, &positionToken);
     }
 }
@@ -86,4 +85,3 @@ int putToken (int columnNumber, int tokenType, int grid[COLUMNS_NUMBER][LINES_NU
     grid[columnNumber][lineNumber] = tokenType;
     return lineNumber;
 }
-
